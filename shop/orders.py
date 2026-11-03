@@ -12,9 +12,9 @@ def place_order(customer_id, total, contains, card_last4):
     with connect() as conn:
         customer = conn.execute("SELECT email, full_name, phone, allergies FROM customers WHERE id = ?",
                                 (customer_id,)).fetchone()
-        allergies = {item.strip() for item in (customer["allergies"] or "").split(",") if item.strip()}
-        if allergies & set(contains):
-            raise AllergyConflict(", ".join(sorted(allergies & set(contains))))
+        known_allergies = {item.strip() for item in (customer["allergies"] or "").split(",") if item.strip()}
+        if known_allergies & set(contains):
+            raise AllergyConflict(", ".join(sorted(known_allergies & set(contains))))
         order_id = conn.execute("INSERT INTO orders (customer_id, total) VALUES (?, ?)",
                                 (customer_id, total)).lastrowid
         conn.execute("INSERT INTO payments (customer_id, card_last4, amount) VALUES (?, ?, ?)",
