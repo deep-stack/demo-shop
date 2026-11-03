@@ -6,7 +6,7 @@ from .db import connect
 
 
 def sign_up(email, full_name, phone, allergies, street, city, postcode):
-    """Create a customer and their address, and tell analytics about the signup."""
+    """Create a customer and their address, then tell analytics about the new signup."""
     now = datetime.now(timezone.utc).isoformat()
     with connect() as conn:
         customer_id = conn.execute(
