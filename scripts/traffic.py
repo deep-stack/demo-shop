@@ -1,18 +1,21 @@
 """Send the shop a few requests that fail, so Sentry has real errors to show. Start the shop first."""
 import json
+import time
 import urllib.error
 import urllib.request
 
 SHOP = "http://127.0.0.1:8000"
+# A new customer each run, so the signup gets past the unique email to the analytics call.
+EMAIL = f"ana+{int(time.time())}@team.example"
 
 REQUESTS = [
     # Signs up, then fails telling analytics: the customer is saved, the request still fails.
-    ("/signup", {"email": "ana@team.example", "full_name": "Ana Silva", "phone": "+15550100", "allergies": "peanuts",
+    ("/signup", {"email": EMAIL, "full_name": "Ana Silva", "phone": "+15550100", "allergies": "peanuts",
                  "street": "1 Main St", "city": "Springfield", "postcode": "12345"}),
     # An order for a customer who does not exist.
     ("/orders", {"customer_id": 999999, "total": 1250, "contains": ["milk"], "card_last4": "4242"}),
     # A support ticket, which fails copying it to the helpdesk.
-    ("/support", {"customer_email": "ana@team.example", "message": "My order arrived damaged"}),
+    ("/support", {"customer_email": EMAIL, "message": "My order arrived damaged"}),
     # Closing an account that does not exist.
     ("/close-account", {"customer_id": 999999}),
     # A sign-up missing its fields.

@@ -13,5 +13,8 @@ def connect():
 
 
 def create():
+    """Create the database on the first start; later starts keep it."""
+    if PATH.exists():
+        return
     with connect() as conn:
         conn.executescript(SCHEMA.read_text())
