@@ -86,3 +86,24 @@ ngin8r generate
 - [ ] The SMS service appears in "Sent to" for contact data; the marks from step 4 still hold.
 - [ ] Change the line `allergies` is read on in `orders.py`, update again: its label shows
       "the code it was marked against changed".
+
+## Sentry
+
+The shop sends its errors to Sentry when `SENTRY_DSN` is set, for testing Insights' Sentry integration.
+
+| Code | What Sentry should show |
+|---|---|
+| `server.Handler` | Every failed request as an issue, with its traceback |
+| `outside.post` | A failed call to an outside service, logged as an error **with the whole payload**: customers' emails, names and messages reach Sentry, which Insights should find |
+| `accounts.sign_up` | Analytics fails after the customer is saved: the request fails but the signup stays |
+| `orders.place_order`, `accounts.close_account` | An unknown customer ID fails on `None` instead of a clear error |
+
+```sh
+python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+cp .env.example .env            # then set SENTRY_DSN
+.venv/bin/python -m shop.server  # in one terminal
+python3 scripts/traffic.py       # in another
+```
+
+ngin8r reads Sentry with an auth token of its own (read-only scopes `org:read`, `project:read`, `event:read`), not the
+DSN: only whoever runs the shop needs the DSN.
