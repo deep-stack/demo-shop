@@ -1,0 +1,19 @@
+# The shop's Postgres database: created with its schema, demo data and ngin8r's logins on the first start.
+#   docker compose up -d        then DATABASE_URL=postgresql://shop:shop-demo-pass@127.0.0.1:55433/shop
+#   docker compose down -v      to start again from the demo data
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: shop
+      POSTGRES_USER: shop
+      POSTGRES_PASSWORD: shop-demo-pass
+    ports:
+      - "127.0.0.1:55433:5432"
+    volumes:
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/1-schema.sql:ro
+      - ./db/seed.sql:/docker-entrypoint-initdb.d/2-seed.sql:ro
+      - ./db/roles.sql:/docker-entrypoint-initdb.d/3-roles.sql:ro
+      - shop-db:/var/lib/postgresql/data
+volumes:
+  shop-db:

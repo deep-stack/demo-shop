@@ -18,6 +18,35 @@ Each piece is here for one feature:
 | `analytics.py` → analytics.example.com | email, city | An outside recipient, **not declared**: `undeclared-recipient` |
 | branch `sms-reminders` | phone → sms.example.com | A new recipient for `compare` and `update` |
 
+## Testing ngin8r's database source
+
+The shop keeps its data in Postgres, which `compose.yaml` starts with weeks of demo data in it. The data shows two of
+the shop's problems happening:
+
+- **Charged twice:** five orders and their payments were placed again 4 seconds after the first. `place_order` emails
+  the receipt after saving, so a slow mail server makes the client time out and send the order again; nothing stops a
+  second order.
+- **Tickets kept after closing an account:** five support tickets belong to customers whose accounts were closed.
+  `close_account` never touches `support_tickets`.
+
+```sh
+docker compose up -d            # the database, on 127.0.0.1:55433
+docker compose down -v          # to start again from the demo data
+```
+
+In the docs workspace, Settings → External sources → **Database**:
+
+| Host | Port | Database | User | Password | SSL | Expect |
+|---|---|---|---|---|---|---|
+| 127.0.0.1 | 55433 | shop | shop_writer | writer-demo-pass | Off | Refused: it can change `public.orders` |
+| 127.0.0.1 | 55433 | shop | shop_reader | reader-demo-pass | Off | Reads 5 tables; save it |
+
+Then run Insights with Claude. The charged-twice and the kept-tickets issues should say **Seen in the database**, with
+the query that shows it and how many rows it returned.
+
+To run the shop itself as well: `pip install -r requirements.txt`, copy `.env.example` to `.env`, then
+`python -m shop.server`.
+
 ## Test plan
 
 Run in order. Check each step before the next.
