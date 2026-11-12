@@ -27,5 +27,6 @@ def close_account(customer_id):
         conn.execute("UPDATE payments SET card_last4 = NULL, customer_id = NULL WHERE customer_id = %s",
                      (customer_id,))
         conn.execute("UPDATE orders SET customer_id = NULL WHERE customer_id = %s", (customer_id,))
+        conn.execute("DELETE FROM support_tickets WHERE customer_email = %s", (email,))
         conn.execute("DELETE FROM customers WHERE id = %s", (customer_id,))
     mailer.send_goodbye(email)
