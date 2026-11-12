@@ -1,39 +1,41 @@
 -- The shop's database.
 
 CREATE TABLE customers (
-    id          INTEGER PRIMARY KEY,
-    email       TEXT NOT NULL UNIQUE,
-    full_name   TEXT NOT NULL,
-    phone       TEXT,
-    allergies   TEXT,              -- what the customer is allergic to, checked before a food order ships
-    created_at  TEXT NOT NULL
+    id          serial PRIMARY KEY,
+    email       text NOT NULL UNIQUE,
+    full_name   text NOT NULL,
+    phone       text,
+    allergies   text,              -- what the customer is allergic to, checked before a food order ships
+    created_at  timestamptz NOT NULL DEFAULT now()
 );
 
 CREATE TABLE addresses (
-    id          INTEGER PRIMARY KEY,
-    customer_id INTEGER NOT NULL REFERENCES customers(id),
-    street      TEXT NOT NULL,
-    city        TEXT NOT NULL,
-    postcode    TEXT NOT NULL
+    id          serial PRIMARY KEY,
+    customer_id integer NOT NULL REFERENCES customers(id),
+    street      text NOT NULL,
+    city        text NOT NULL,
+    postcode    text NOT NULL
 );
 
 CREATE TABLE payments (
-    id          INTEGER PRIMARY KEY,
-    customer_id INTEGER REFERENCES customers(id),
-    card_last4  TEXT,
-    amount      INTEGER NOT NULL
+    id          serial PRIMARY KEY,
+    customer_id integer REFERENCES customers(id),
+    card_last4  text,
+    amount      integer NOT NULL,
+    created_at  timestamptz NOT NULL DEFAULT now()
 );
 
 CREATE TABLE orders (
-    id          INTEGER PRIMARY KEY,
-    customer_id INTEGER REFERENCES customers(id),
-    total       INTEGER NOT NULL,
-    status      TEXT NOT NULL DEFAULT 'new'
+    id          serial PRIMARY KEY,
+    customer_id integer REFERENCES customers(id),
+    total       integer NOT NULL,
+    status      text NOT NULL DEFAULT 'new',
+    created_at  timestamptz NOT NULL DEFAULT now()
 );
 
 CREATE TABLE support_tickets (
-    id             INTEGER PRIMARY KEY,
-    customer_email TEXT NOT NULL,
-    message        TEXT NOT NULL,
-    created_at     TEXT NOT NULL
+    id             serial PRIMARY KEY,
+    customer_email text NOT NULL,
+    message        text NOT NULL,
+    created_at     timestamptz NOT NULL DEFAULT now()
 );

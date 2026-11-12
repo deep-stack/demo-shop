@@ -1,20 +1,17 @@
-"""The shop's SQLite database."""
-import sqlite3
-from pathlib import Path
+"""The shop's Postgres database, at DATABASE_URL in the environment or in .env."""
+import os
 
-PATH = Path(__file__).resolve().parent.parent / "shop.db"
-SCHEMA = Path(__file__).resolve().parent.parent / "db" / "schema.sql"
+import psycopg
+from psycopg.rows import dict_row
+
+from .monitoring import load_env
 
 
 def connect():
-    conn = sqlite3.connect(PATH)
-    conn.row_factory = sqlite3.Row
-    return conn
+    """A connection that commits when its block ends without an error."""
+    load_env()
+    return psycopg.connect(os.environ["DATABASE_URL"], row_factory=dict_row)
 
 
 def create():
-    """Create the database on the first start; later starts keep it."""
-    if PATH.exists():
-        return
-    with connect() as conn:
-        conn.executescript(SCHEMA.read_text())
+    """Nothing to do: the database is created with its schema by compose.yaml."""
