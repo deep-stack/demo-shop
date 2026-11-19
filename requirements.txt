@@ -2,3 +2,4 @@ sentry-sdk>=2,<3
 psycopg[binary]>=3,<4
 PyJWT==1.7.1
 Jinja2==2.11.2
+resend>=2,<3

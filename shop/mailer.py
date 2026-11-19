@@ -1,17 +1,26 @@
-"""Emails sent through the mail service."""
+"""Emails sent through Resend."""
 import os
 
-from .outside import post
+import resend
 
-MAIL_URL = os.environ.get("MAIL_URL", "https://mail.example.com/v1/send")
+resend.api_key = os.environ.get("RESEND_API_KEY")
 
 
 def send_receipt(email, full_name, order_id, total):
     """Email the customer a receipt for their order."""
-    post(MAIL_URL, {"to": email, "name": full_name,
-                    "subject": f"Your order {order_id}", "body": f"Thank you! Total: {total / 100:.2f}"})
+    resend.Emails.send({
+        "from": "Shop <onboarding@resend.dev>",
+        "to": [email],
+        "subject": f"Your order {order_id}",
+        "html": f"<p>Thank you, {full_name}! Total: {total / 100:.2f}</p>",
+    })
 
 
 def send_goodbye(email):
     """Confirm to the customer that their account is closed."""
-    post(MAIL_URL, {"to": email, "subject": "Your account is closed", "body": "We have removed your details."})
+    resend.Emails.send({
+        "from": os.environ["EMAIL_FROM"],
+        "to": [email],
+        "subject": "Your account is closed",
+        "html": "<p>We have removed your details.</p>",
+    })

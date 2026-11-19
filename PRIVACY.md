@@ -1,3 +1,3 @@
 ## Privacy: declared recipients
 
-- Mail service (mail.example.com): customer email and name, for receipts and account emails.
+- Resend (resend.com): customer email and name, for receipts, welcome and account emails.
