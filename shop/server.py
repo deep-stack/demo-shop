@@ -3,7 +3,7 @@ import json
 import logging
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
-from . import accounts, monitoring, orders, reports, support
+from . import accounts, monitoring, orders, payments, reports, support
 from .db import create
 
 log = logging.getLogger(__name__)
@@ -35,6 +35,11 @@ class Handler(BaseHTTPRequestHandler):
         self.answer(lambda: job())
 
     def do_POST(self):
+        if route_of(self.path) == "/stripe-webhook":
+            # Stripe signs the body as it sent it, so it is checked before it is read.
+            payload = self.rfile.read(int(self.headers.get("Content-Length", 0)))
+            self.answer(lambda: payments.handle(payload, self.headers.get("Stripe-Signature")))
+            return
         route = ROUTES.get(route_of(self.path))
         if route is None:
             self.send_error(404)

@@ -9,6 +9,7 @@ class RouteTests(unittest.TestCase):
         self.assertEqual(route_of("/orders"), "/orders")
         self.assertEqual(route_of("/api/orders"), "/orders")
         self.assertEqual(route_of("/api/nightly-report?x=1"), "/nightly-report")
+        self.assertEqual(route_of("/api/stripe-webhook"), "/stripe-webhook")
 
 
 if __name__ == "__main__":
