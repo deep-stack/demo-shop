@@ -1,0 +1,12 @@
+body { font: 16px/1.5 system-ui, sans-serif; margin: 0 auto; max-width: 40rem; padding: 2rem 1rem; color: #232a25; }
+nav a { margin-right: 1rem; color: #2d5a3d; }
+h1 { color: #2d5a3d; }
+label { display: block; margin: 0.6rem 0 0.2rem; }
+input, textarea { width: 100%; padding: 0.4rem; box-sizing: border-box; }
+input[type=checkbox] { width: auto; }
+button { margin-top: 0.8rem; padding: 0.4rem 1rem; background: #2d5a3d; color: white; border: 0; border-radius: 4px; }
+li button { margin: 0 0 0 0.5rem; padding: 0.1rem 0.5rem; background: #888; }
+.message { padding: 0.6rem; border-radius: 4px; }
+.ok { background: #dcefdf; color: #1f4029; }
+.error { background: #f6dcd9; color: #8a2a20; }
+.warning { background: #b8362a; color: white; }

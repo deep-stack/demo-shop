@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Help</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<nav><a href="index.html">Shop</a><a href="signup.html">Sign up</a><a href="order.html">Order</a><a href="support.html">Help</a></nav>
+<h1>Ask for help</h1>
+<form id="support">
+  <label for="support-email">Your email</label><input id="support-email">
+  <label for="question">Your question</label><textarea id="question" maxlength="500"></textarea>
+  <p><span id="left">500</span> characters left</p>
+  <button type="submit">Send question</button>
+</form>
+<p id="support-message" hidden></p>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Demo shop</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<nav><a href="index.html">Shop</a><a href="signup.html">Sign up</a><a href="order.html">Order</a><a href="support.html">Help</a></nav>
+<h1>Demo shop</h1>
+<p>Groceries to your door, checked for your allergies.</p>
+<h2>Today's groceries</h2>
+<ul>
+  <li>Apples, £3.20 <button data-add="apples">Add apples</button></li>
+  <li>Bread, £2.50 <button data-add="bread">Add bread</button></li>
+  <li>Peanut butter, £4.75 <button data-add="peanut-butter">Add peanut butter</button></li>
+  <li>Milk, £1.40 <button data-add="milk">Add milk</button></li>
+</ul>
+<h2>Basket (<span id="basket-count">0</span>)</h2>
+<p id="basket-empty">Your basket is empty.</p>
+<ul id="basket-items"></ul>
+<p>Total: <strong id="basket-total">£0.00</strong></p>
+<script src="app.js"></script>
+</body>
+</html>

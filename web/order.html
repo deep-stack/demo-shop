@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Order</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<nav><a href="index.html">Shop</a><a href="signup.html">Sign up</a><a href="order.html">Order</a><a href="support.html">Help</a></nav>
+<h1>Place an order</h1>
+<form id="order">
+  <label for="customer">Customer number</label><input id="customer" value="1">
+  <fieldset><legend>Items</legend>
+    <label><input type="checkbox" name="item" value="apples"> Apples</label>
+    <label><input type="checkbox" name="item" value="bread"> Bread</label>
+    <label><input type="checkbox" name="item" value="peanut-butter"> Peanut butter</label>
+    <label><input type="checkbox" name="item" value="milk"> Milk</label>
+  </fieldset>
+  <p>Total: <strong id="order-total">£0.00</strong></p>
+  <label for="card">Last 4 digits of your card</label><input id="card">
+  <button type="submit">Pay and order</button>
+</form>
+<p id="order-message" hidden></p>
+<script src="app.js"></script>
+</body>
+</html>
