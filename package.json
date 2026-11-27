@@ -2,9 +2,12 @@
   "name": "demo-shop-web",
   "private": true,
   "scripts": {
-    "test": "playwright test"
+    "test": "playwright test",
+    "test:puppeteer": "jest --rootDir e2e-puppeteer"
   },
   "devDependencies": {
-    "@playwright/test": "1.63.0"
+    "@playwright/test": "1.63.0",
+    "jest": "30.5.2",
+    "puppeteer-core": "24.43.1"
   }
 }
