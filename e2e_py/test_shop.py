@@ -5,7 +5,9 @@ from playwright.sync_api import Page, expect
 class TestBasket:
     def test_adds_apples(self, page: Page):
         page.goto("/index.html")
-        page.click("text=Add apples")
+        page.get_by_role(
+            "button", name="Add apples"
+        ).click()
         expect(page.locator("#basket-count")).to_have_text("1")
 
     @pytest.mark.parametrize("item, total", [("bread", "£2.50"), ("milk", "£1.40")])

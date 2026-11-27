@@ -22,12 +22,14 @@ describe("Order", () => {
     await page.click("input[value='apples']");
     await page.click("input[value='bread']");
     const total = await page.$eval("#order-total", (el) => el.textContent);
-    expect(total).toContain("£");
+    expect(total).toBe("£5.70");
   });
 
   it("asks for at least one item", async () => {
     await page.goto(`${URL}/order.html`);
-    await page.click("::-p-text(Pay and order)");
+    await page
+      .locator("::-p-text(Pay and order)")
+      .click();
     const said = await page.$eval("#order-message", (el) => el.textContent);
     expect(said).toBe("Choose at least one item.");
   });
