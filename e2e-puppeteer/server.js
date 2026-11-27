@@ -2,7 +2,8 @@
 const { spawn } = require("node:child_process");
 const path = require("node:path");
 const puppeteer = require("puppeteer-core");
-const { chromium } = require("@playwright/test");
+// The Chromium the image has for Playwright, so no other browser is downloaded.
+const { chromium } = require("playwright-core");
 
 const PORT = 4175;
 const URL = `http://127.0.0.1:${PORT}`;
